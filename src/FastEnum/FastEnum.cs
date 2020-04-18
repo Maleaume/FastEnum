@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 
@@ -276,15 +277,19 @@ namespace FastEnumUtility
         {
             if (ignoreCase)
             {
-                foreach (var member in Cache_Members<T>.Members)
+                //var foundItem = Cache_Members<T>.Members.FirstOrDefault(m => name.Equals(m.Name, StringComparison.OrdinalIgnoreCase));
+                //if (foundItem != null)
+                foreach (var m in Cache_Members<T>.Members)
                 {
-                    if (name.Equals(member.Name, StringComparison.OrdinalIgnoreCase))
+                    if (name.Equals(m.Name, StringComparison.OrdinalIgnoreCase))
                     {
-                        result = member.Value;
+                        result = m.Value;
                         return true;
+
                     }
                 }
             }
+
             else
             {
                 if (Cache_MembersByName<T>.MemberByName.TryGetValue(name, out var member))

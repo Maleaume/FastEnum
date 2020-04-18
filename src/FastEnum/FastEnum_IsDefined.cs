@@ -13,6 +13,16 @@ namespace FastEnumUtility
     /// </summary>
     public static partial class FastEnum
     {
+
+     private static bool IsDefined<T,S>(S value)
+         where S : struct, IComparable, IComparable<S>, IConvertible, IEquatable<S>, IFormattable
+         where T : struct, Enum
+        {
+            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(S))
+                return Operation<T,S>.IsDefined(ref value);
+            throw new ArgumentException(IsDefinedTypeMismatchMessage);
+        }
+
         /// <summary>
         /// Returns an indication whether a constant with a specified value exists in a specified enumeration.
         /// </summary>
@@ -21,11 +31,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(sbyte value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(sbyte))
-                return SByteOperation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,sbyte>(value);
 
 
         /// <summary>
@@ -36,11 +42,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(byte value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(byte))
-                return ByteOperation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,byte>(value);
 
 
         /// <summary>
@@ -51,11 +53,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(short value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(short))
-                return Int16Operation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,short>(value);
 
 
         /// <summary>
@@ -66,11 +64,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(ushort value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(ushort))
-                return UInt16Operation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,ushort>(value);
 
 
         /// <summary>
@@ -81,11 +75,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(int value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(int))
-                return Int32Operation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,int>(value);
 
 
         /// <summary>
@@ -96,11 +86,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(uint value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(uint))
-                return UInt32Operation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,uint>(value);
 
 
         /// <summary>
@@ -111,11 +97,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(long value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(long))
-                return Int64Operation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,long>(value);
 
 
         /// <summary>
@@ -126,11 +108,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(ulong value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(ulong))
-                return UInt64Operation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,ulong>(value);
 
 
     }

@@ -16,7 +16,7 @@ namespace FastEnumUtility.Benchmark.Scenarios
 
         private Dictionary<string, Member<Fruits>> Standard { get; set; }
         private FrozenDictionary<string, Member<Fruits>> GenericsKeyFrozen { get; set; }
-        private FrozenStringKeyDictionary<Member<Fruits>> StringKeyFrozen { get; set; }
+       
         private Hashtable Table { get; set; }
 
 
@@ -26,7 +26,7 @@ namespace FastEnumUtility.Benchmark.Scenarios
             var members = FastEnum.GetMembers<Fruits>();
             this.Standard = members.ToDictionary(x => x.Name);
             this.GenericsKeyFrozen = members.ToFrozenDictionary(x => x.Name);
-            this.StringKeyFrozen = members.ToFrozenStringKeyDictionary(x => x.Name);
+       
             this.Table = new Hashtable(members.Count);
             foreach (var x in members)
                 this.Table[x.Name] = x;
@@ -43,9 +43,6 @@ namespace FastEnumUtility.Benchmark.Scenarios
             => this.GenericsKeyFrozen.TryGetValue(LookupKey, out _);
 
 
-        [Benchmark]
-        public bool FrozenStringKeyDictionary()
-            => this.StringKeyFrozen.TryGetValue(LookupKey, out _);
 
 
         [Benchmark]

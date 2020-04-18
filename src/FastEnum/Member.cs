@@ -8,6 +8,8 @@ using FastEnumUtility.Internals;
 
 namespace FastEnumUtility
 {
+
+
     /// <summary>
     /// Represents the member information of the constant in the specified enumeration.
     /// </summary>
@@ -43,7 +45,7 @@ namespace FastEnumUtility
         /// <summary>
         /// Gets the labels of specified enumration member.
         /// </summary>
-        internal FrozenInt32KeyDictionary<string> Labels { get; }
+        internal FrozenDictionary<int, string> Labels { get; }
         #endregion
 
 
@@ -64,7 +66,7 @@ namespace FastEnumUtility
             this.Labels
                 = this.FieldInfo
                 .GetCustomAttributes<LabelAttribute>()
-                .ToFrozenInt32KeyDictionary(x => x.Index, x => x.Value);
+                .ToFrozenDictionary(x => x.Index, x => x.Value);
         }
 
 

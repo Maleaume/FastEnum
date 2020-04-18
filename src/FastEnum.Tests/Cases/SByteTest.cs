@@ -102,11 +102,18 @@ namespace FastEnumUtility.Tests.Cases
         public void IsFlags()
             => FastEnum.IsFlags<TEnum>().Should().Be(false);
 
+        public enum ByteEnum2 : byte
+        {
+            A = 12,
+            B = 13,
+        }
 
         [Fact]
         public void IsDefined()
         {
             FastEnum.IsDefined<TEnum>(TEnum.MinValue).Should().BeTrue();
+            FastEnum.IsDefined<ByteEnum2>(ByteEnum2.A).Should().BeTrue();
+
             FastEnum.IsDefined<TEnum>(TEnum.Zero).Should().BeTrue();
             FastEnum.IsDefined<TEnum>(TEnum.MaxValue).Should().BeTrue();
             FastEnum.IsDefined<TEnum>((TEnum)123).Should().BeFalse();

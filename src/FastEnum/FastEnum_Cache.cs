@@ -106,10 +106,10 @@ namespace FastEnumUtility
         private static class Cache_MembersByName<T>
             where T : struct, Enum
         {
-            public static readonly FrozenStringKeyDictionary<Member<T>> MemberByName;
+            public static readonly FrozenDictionary<string,Member<T>> MemberByName;
 
             static Cache_MembersByName()
-                => MemberByName = Cache_Members<T>.Members.ToFrozenStringKeyDictionary(x => x.Name);
+                => MemberByName = Cache_Members<T>.Members.ToFrozenDictionary(x => x.Name);
         }
 
 
@@ -130,14 +130,14 @@ namespace FastEnumUtility
                 UnderlyingOperation
                     = Type.GetTypeCode(type) switch
                     {
-                        TypeCode.SByte => SByteOperation<T>.Create(min, max, distincted),
-                        TypeCode.Byte => ByteOperation<T>.Create(min, max, distincted),
-                        TypeCode.Int16 => Int16Operation<T>.Create(min, max, distincted),
-                        TypeCode.UInt16 => UInt16Operation<T>.Create(min, max, distincted),
-                        TypeCode.Int32 => Int32Operation<T>.Create(min, max, distincted),
-                        TypeCode.UInt32 => UInt32Operation<T>.Create(min, max, distincted),
-                        TypeCode.Int64 => Int64Operation<T>.Create(min, max, distincted),
-                        TypeCode.UInt64 => UInt64Operation<T>.Create(min, max, distincted),
+                        TypeCode.SByte => new SByteOperation<T>().Create(min, max, distincted),
+                        TypeCode.Byte => new ByteOperation<T>().Create(min, max, distincted),
+                        TypeCode.Int16 => new Int16Operation<T>().Create(min, max, distincted),
+                        TypeCode.UInt16 => new UInt16Operation<T>().Create(min, max, distincted),
+                        TypeCode.Int32 => new Int32Operation<T>().Create(min, max, distincted),
+                        TypeCode.UInt32 => new UInt32Operation<T>().Create(min, max, distincted),
+                        TypeCode.Int64 => new Int64Operation<T>().Create(min, max, distincted),
+                        TypeCode.UInt64 => new UInt64Operation<T>().Create(min, max, distincted),
                         _ => throw new InvalidOperationException(),
                     };
             }

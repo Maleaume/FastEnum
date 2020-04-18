@@ -31,6 +31,16 @@ namespace FastEnumUtility
     /// </summary>
     public static partial class FastEnum
     {
+
+     private static bool IsDefined<T,S>(S value)
+         where S : struct, IComparable, IComparable<S>, IConvertible, IEquatable<S>, IFormattable
+         where T : struct, Enum
+        {
+            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(S))
+                return Operation<T,S>.IsDefined(ref value);
+            throw new ArgumentException(IsDefinedTypeMismatchMessage);
+        }
+
 <# foreach (var x in parameters) { #>
         /// <summary>
         /// Returns an indication whether a constant with a specified value exists in a specified enumeration.
@@ -40,11 +50,7 @@ namespace FastEnumUtility
         /// <returns></returns>
         public static bool IsDefined<T>(<#= x.CompatibleName #> value)
             where T : struct, Enum
-        {
-            if (Cache_UnderlyingOperation<T>.UnderlyingType == typeof(<#= x.CompatibleName #>))
-                return <#= x.TypeName #>Operation<T>.IsDefined(ref value);
-            throw new ArgumentException(IsDefinedTypeMismatchMessage);
-        }
+          => IsDefined<T,<#= x.CompatibleName #>>(value);
 
 
 <# } #>
